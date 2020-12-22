@@ -5,21 +5,21 @@ Based on: https://github.com/pardahlman/docker-rabbitmq-cluster
 - [Cluster RabbitMQ :rabbit:](#cluster-rabbitmq-rabbit)
   - [Install](#install)
   - [Customize](#customize)
-    - [The .env file](#the-env-file)
-    - [The config/rabbitmq.conf](#the-configrabbitmqconf)
-    - [The config/advanced.config](#the-configadvancedconfig)
-    - [The config/enabled_plugins](#the-configenabledplugins)
+    - [The `.env` file](#the-env-file)
+    - [The `config/rabbitmq.conf`](#the-configrabbitmqconf)
+    - [The `config/advanced.config`](#the-configadvancedconfig)
+    - [The `config/enabled_plugins`](#the-configenabled_plugins)
   - [Use](#use)
-    - [With rabbitmqadmin tool](#with-rabbitmqadmin-tool)
+    - [With `rabbitmqadmin` tool](#with-rabbitmqadmin-tool)
     - [With Python snippets](#with-python-snippets)
   - [Clean-up](#clean-up)
 
 ## Install
 
 ```shell
-> git clone https://github.com/mentels/docker-rabbitmq-cluster.git
-> cd docker-rabbitmq-cluster
-> docker-compose up
+git clone https://github.com/mentels/docker-rabbitmq-cluster.git
+cd docker-rabbitmq-cluster
+docker-compose up
 ```
 
 Most things will be how you expect:
@@ -61,9 +61,20 @@ can be changed via this file.
 
 ## Use
 
+First make sure the RabbitMQ cluster is running:
+
+```shell
+docker-compose exec rabbitmq1 rabbitmqctl cluster_status
+# ....
+# Running Nodes
+# rabbit@rabbitmq1
+# rabbit@rabbitmq2
+# rabbit@rabbitmq3
+```
+
 ### With `rabbitmqadmin` tool
 
-Make sure the RabbitMQ cluster is running. Then get the `rabbitmqadmin` tool:
+Get the `rabbitmqadmin` tool:
 
  ```shell
 curl http://localhost:15672/cli/rabbitmqadmin -o rabbitmqadmin
@@ -83,7 +94,7 @@ Now using the Management Plugin one can see stats for the `my_queue` to see that
 
 ### With Python snippets
 
-Make sure the RabbitMQ cluster is running. Then install python dependencies:
+Install python dependencies:
 
 > **NOTE:** For this to work you need to have [pipenv](https://github.com/pypa/pipenv) installed.
 

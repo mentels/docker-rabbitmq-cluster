@@ -1,19 +1,18 @@
-version: '3'
+version: "3"
 
 services:
-
   rabbitmq1:
     image: rabbitmq:${RABBITMQ_DOCKER_TAG}
     hostname: rabbitmq1
     environment:
       - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
-    volumes: 
+    volumes:
       - ./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
       - ./config/advanced.config:/etc/rabbitmq/advanced.config
       - ./config/enabled_plugins:/etc/rabbitmq/enabled_plugins
     ports:
-       - 5673:5672
-       - 15673:15672
+      - 5673:5672
+      - 15673:15672
 
   rabbitmq2:
     image: rabbitmq:${RABBITMQ_DOCKER_TAG}
@@ -29,8 +28,8 @@ services:
       - ./config/enabled_plugins:/etc/rabbitmq/enabled_plugins
     entrypoint: /usr/local/bin/cluster-entrypoint.sh
     ports:
-       - 5674:5672
-       - 15674:15672
+      - 5674:5672
+      - 15674:15672
 
   rabbitmq3:
     image: rabbitmq:${RABBITMQ_DOCKER_TAG}
@@ -46,9 +45,9 @@ services:
       - ./config/enabled_plugins:/etc/rabbitmq/enabled_plugins
     entrypoint: /usr/local/bin/cluster-entrypoint.sh
     ports:
-       - 5675:5672
-       - 15675:15672
-    
+      - 5675:5672
+      - 15675:15672
+
   haproxy:
     image: haproxy:1.7
     volumes:
