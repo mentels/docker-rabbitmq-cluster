@@ -12,6 +12,7 @@ Based on: https://github.com/pardahlman/docker-rabbitmq-cluster
   - [Use](#use)
     - [With `rabbitmqadmin` tool](#with-rabbitmqadmin-tool)
     - [With Python snippets](#with-python-snippets)
+  - [Curling stats](#curling-stats)
   - [Clean-up](#clean-up)
 
 ## Install
@@ -86,6 +87,9 @@ Then declare a queue, publish some message and get that message from a queue:
 ./rabbitmqadmin declare queue name=my_queue
 ./rabbitmqadmin publish routing_key=my_queue payload=szkolarabbita
 ./rabbitmqadmin get queue=my_queue ackmode=ack_requeue_false
+# from: http://localhost:15672/api/index.html
+# ackmode determines whether the messages will be removed from the queue. If ackmode is ack_requeue_true or reject_requeue_true they will be requeued - if ackmode is ack_requeue_false or reject_requeue_false they will be removed.
+
 ```
 
 Now using the Management Plugin one can see stats for the `my_queue` to see that the message really went through it: http://localhost:15672/#/queues/%2F/my_queue
@@ -117,6 +121,15 @@ pipenv run python send.py --queue another_queue --message hello
 ```
 
 Finally, you can check the `another_queue` stats at http://localhost:15672/#/queues/%2F/another_queue.
+## Curling stats
+
+The stats for a queue can also be obtained with an HTTP request, e.g.
+
+```shell
+curl -u guest:guest http://localhost:15672/api/queues/%2F/another_queue | jq '.message_stats'
+```
+
+See [HTTP API Stats section](http://localhost:15672/api/index.html) in the HTTP API documentation.
 
 ## Clean-up
 
